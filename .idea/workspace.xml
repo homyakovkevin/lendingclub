@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="589e3aa0-f39d-4dae-80b0-5da694d21b4f" name="Default Changelist" comment="" />
+    <list default="true" id="589e3aa0-f39d-4dae-80b0-5da694d21b4f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/HW9/JavaMySql.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HW9/JavaMySql.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/HW9/META-INF/HW9.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JavaMySql.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JavaMySql.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -10,19 +16,27 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DefaultGradleProjectSettings">
-    <option name="testRunner" value="GRADLE" />
-    <option name="delegatedBuild" value="true" />
+    <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/JavaMySql.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="150" column="25" selection-start-line="150" selection-start-column="25" selection-end-line="150" selection-end-column="25" />
+            <state relative-caret-position="-206">
+              <caret line="104" column="22" selection-start-line="104" selection-start-column="22" selection-end-line="104" selection-end-column="22" />
               <folding>
-                <element signature="e#0#4255#0" expanded="true" />
                 <element signature="imports" expanded="true" />
+                <element signature="docComment;field#userName#0;class#JavaMySql#0" />
+                <element signature="docComment;field#password#0;class#JavaMySql#0" />
+                <element signature="docComment;field#serverName#0;class#JavaMySql#0" />
+                <element signature="docComment;field#portNumber#0;class#JavaMySql#0" />
+                <element signature="docComment;field#dbName#0;class#JavaMySql#0" />
+                <element signature="docComment;field#tableName#0;class#JavaMySql#0" />
+                <element signature="docComment;method#getConnection#0;class#JavaMySql#0" />
+                <element signature="method#getConnection#0;class#JavaMySql#0" />
+                <element signature="docComment;method#executeUpdate#0;class#JavaMySql#0" />
+                <element signature="method#executeUpdate#0;class#JavaMySql#0" />
               </folding>
             </state>
           </provider>
@@ -37,6 +51,14 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="kevin" />
+      </map>
+    </option>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -48,11 +70,13 @@
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -69,11 +93,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -106,6 +130,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -120,11 +146,13 @@
       <option name="presentableId" value="Default" />
       <updated>1573777915716</updated>
       <workItem from="1573777918529" duration="4607000" />
+      <workItem from="1574959093138" duration="1189000" />
+      <workItem from="1574960356958" duration="2065000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4607000" />
+    <option name="totallyTimeSpent" value="7861000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -134,21 +162,21 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.24964234" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.25679544" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Messages" weight="0.32891566" />
       <window_info anchor="bottom" id="Version Control" order="0" />
-      <window_info anchor="bottom" id="Terminal" order="1" />
+      <window_info anchor="bottom" id="Terminal" order="1" weight="0.32891566" />
       <window_info anchor="bottom" id="Database Changes" order="2" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Docker" order="4" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
-      <window_info anchor="bottom" id="Run" order="7" weight="0.3120482" />
+      <window_info active="true" anchor="bottom" id="Run" order="7" visible="true" weight="0.3120482" />
       <window_info anchor="bottom" id="Debug" order="8" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.32891566" />
       <window_info anchor="right" id="Theme Preview" order="0" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Palette&#9;" order="2" />
@@ -164,20 +192,23 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/JavaMySql.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="150" column="25" selection-start-line="150" selection-start-column="25" selection-end-line="150" selection-end-column="25" />
+        <state relative-caret-position="-206">
+          <caret line="104" column="22" selection-start-line="104" selection-start-column="22" selection-end-line="104" selection-end-column="22" />
           <folding>
-            <element signature="e#0#4255#0" expanded="true" />
             <element signature="imports" expanded="true" />
+            <element signature="docComment;field#userName#0;class#JavaMySql#0" />
+            <element signature="docComment;field#password#0;class#JavaMySql#0" />
+            <element signature="docComment;field#serverName#0;class#JavaMySql#0" />
+            <element signature="docComment;field#portNumber#0;class#JavaMySql#0" />
+            <element signature="docComment;field#dbName#0;class#JavaMySql#0" />
+            <element signature="docComment;field#tableName#0;class#JavaMySql#0" />
+            <element signature="docComment;method#getConnection#0;class#JavaMySql#0" />
+            <element signature="method#getConnection#0;class#JavaMySql#0" />
+            <element signature="docComment;method#executeUpdate#0;class#JavaMySql#0" />
+            <element signature="method#executeUpdate#0;class#JavaMySql#0" />
           </folding>
         </state>
       </provider>

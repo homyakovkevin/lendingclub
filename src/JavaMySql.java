@@ -1,21 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- 
-db.mysql.url="jdbc:mysql://localhost:3306/db?characterEncoding=UTF-8&useSSL=false"
-*/
-//package javamysql;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
 
 /**
  * @author kath
@@ -25,12 +14,12 @@ public class JavaMySql {
     /**
      * The name of the MySQL account to use (or empty for anonymous)
      */
-    private final String userName;
+    private final String userName = "root";
 
     /**
      * The password for the MySQL account (or empty for anonymous)
      */
-    private final String password;
+    private final String password = "Lebronjames23!";
 
     /**
      * The name of the computer running MySQL
@@ -45,18 +34,13 @@ public class JavaMySql {
     /**
      * The name of the database we are testing with (this default is installed with MySQL)
      */
-    private final String dbName = "lotrfinal";
+    private final String dbName = "lendingclub";
 
     /**
      * The name of the table we are testing with
      */
     private final String tableName = "JDBC_TEST";
     private final boolean useSSL = false;
-
-    public JavaMySql(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-    }
 
     /**
      * Get a new database connection
@@ -103,7 +87,6 @@ public class JavaMySql {
      */
     public void run() {
 
-        // Connect to MySQL
         Connection conn = null;
         try {
             conn = this.getConnection();
@@ -115,39 +98,33 @@ public class JavaMySql {
         }
 
         try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("select character_name from lotr_character");
-            List<String> character_names = new ArrayList<>();
 
-            System.out.println("Choose your character from the list below");
+            InputStreamReader isr = new InputStreamReader(System.in);
+            BufferedReader br = new BufferedReader(isr);
 
-            while (rs.next()) {
-                System.out.println(rs.getString("character_name"));
-                character_names.add(rs.getString("character_name"));
-            }
-
-            String charName = "";
-
-            while (!character_names.contains(charName)) {
-                InputStreamReader isr = new InputStreamReader(System.in);
-                BufferedReader br = new BufferedReader(isr);
-                charName = br.readLine();
-                if (!character_names.contains(charName)) {
-                    System.out.println("Choose your character again, it does not match the one in the list");
-                }
-            }
-
-            String query = "{CALL track_character(?)}";
-            CallableStatement s = conn.prepareCall(query);
-            s.setString(1, charName);
-            ResultSet r = s.executeQuery();
-
-            while (r.next()) {
-                System.out.println(String.format("%s / %s / %s",
-                        r.getString("name_encountered"),
-                        r.getString("region_name"),
-                        r.getString("b.title")));
-            }
+            if (promptLogin(conn, br)) System.out.println("Nice Login");
+//            String charName = "";
+//
+//            while (!character_names.contains(charName)) {
+//                InputStreamReader isr = new InputStreamReader(System.in);
+//                BufferedReader br = new BufferedReader(isr);
+//                charName = br.readLine();
+//                if (!character_names.contains(charName)) {
+//                    System.out.println("Choose your character again, it does not match the one in the list");
+//                }
+//            }
+//
+//            String query = "{CALL track_character(?)}";
+//            CallableStatement s = conn.prepareCall(query);
+//            s.setString(1, charName);
+//            ResultSet r = s.executeQuery();
+//
+//            while (r.next()) {
+//                System.out.println(String.format("%s / %s / %s",
+//                        r.getString("name_encountered"),
+//                        r.getString("region_name"),
+//                        r.getString("b.title")));
+//            }
             conn.close();
 
 
@@ -156,9 +133,31 @@ public class JavaMySql {
             e.printStackTrace();
             return;
         }
-
     }
 
+    public boolean promptLogin(Connection conn, BufferedReader br) throws IOException, SQLException {
+        System.out.println("Type in your login for Lending Club");
+        String userName = br.readLine();
+        System.out.println("Type in your password for Lending Club");
+        String password = br.readLine();
+
+        Statement stmt = conn.createStatement();
+        ResultSet rs_investor_id = stmt.executeQuery("select investor_id from investor_account");
+        List<String> investor_ids = new ArrayList<>();
+
+        while (rs_investor_id.next()) {
+            investor_ids.add(rs_investor_id.getString("investor_id"));
+        }
+
+        ResultSet rs_password = stmt.executeQuery("select passcode from investor_account");
+        List<String> investor_passwords = new ArrayList<>();
+
+        while (rs_password.next()) {
+            investor_passwords.add(rs_password.getString("passcode"));
+        }
+
+        return investor_passwords.contains(password) && investor_ids.contains(userName);
+    }
 
     /**
      * Connect to the DB and do some stuff
@@ -166,13 +165,7 @@ public class JavaMySql {
      * @param args
      */
     public static void main(String[] args) throws IOException {
-        InputStreamReader isr = new InputStreamReader(System.in);
-        BufferedReader br = new BufferedReader(isr);
-        String userName = br.readLine();
-        String password = br.readLine();
-
-        JavaMySql app = new JavaMySql(userName, password);
+        JavaMySql app = new JavaMySql();
         app.run();
     }
 }
-        
