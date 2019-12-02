@@ -177,7 +177,7 @@ public class JavaMySql {
                     defaultByHo(br, conn);
                 case ("2"):
                     //TODO
-                    // defaultByCR (br, conn)
+                    addLoanToAccount(conn, br);
                 case ("3"):
                     //TODO
                     // averageSizeByCg (br, conn)
@@ -358,7 +358,7 @@ public class JavaMySql {
         System.out.println("Please, enter borrower's income");
         borrowerIncome = Integer.parseInt(br.readLine());
 
-        System.out.println("Please, enter the the borrower's state int the two-letter format");
+        System.out.println("Please, enter the the borrower's state into the two-letter format");
         borrowerState = br.readLine();
 
         System.out.println("Please, enter borrower's credit rating");
@@ -396,7 +396,7 @@ public class JavaMySql {
         System.out.println("Please, enter the interest rate of the loan");
         intRate = Integer.parseInt(br.readLine());
 
-        System.out.println("Please, enter the loa term");
+        System.out.println("Please, enter the loan term");
         loanTerm = br.readLine();
 
         System.out.println("Please, enter the purpose of the loan");
