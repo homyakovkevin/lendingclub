@@ -337,103 +337,107 @@ public class JavaMySql {
 
   public void addLoanToAccount(Connection conn, BufferedReader br) throws IOException {
 
-    int ssn;
-    int borrowerIncome;
-    String borrowerState;
-    float borrowerCreditScore;
+    System.out.println("Are you sure you want to add a loan to your wallet");
+    System.out.println("Enter 0, if you want to return to main menu. Enter 1 if you want to proceed");
+    String userChoice = br.readLine();
+
+    if (userChoice.equals("1")) {
+      int ssn;
+      int borrowerIncome;
+      String borrowerState;
+      float borrowerCreditScore;
 
 
+      try {
+        System.out.println("Please, enter the requested information to add the loan to your investor wallet");
+
+        // Get data for borrower table
+        System.out.println("Please, enter the borrower's Social Security Number");
+        ssn = Integer.parseInt(br.readLine());
+
+        System.out.println("Please, enter borrower's income");
+        borrowerIncome = Integer.parseInt(br.readLine());
+
+        System.out.println("Please, enter the the borrower's state int the two-letter format");
+        borrowerState = br.readLine();
+
+        System.out.println("Please, enter borrower's credit rating");
+        borrowerCreditScore = Float.parseFloat(br.readLine());
+
+        // the mysql insert statement
+        String queryBorrower = " insert into investor_borrower (member_id, annual_income, address, credit_score)"
+            + " values (?, ?, ?, ?)";
+
+        // create the mysql insert preparedstatement
+        PreparedStatement preparedStmtBorrower = conn.prepareStatement(queryBorrower);
+        preparedStmtBorrower.setInt(1, ssn);
+        preparedStmtBorrower.setInt(2, borrowerIncome);
+        preparedStmtBorrower.setString(3, borrowerState);
+        preparedStmtBorrower.setFloat(4, borrowerCreditScore);
+        // execute the preparedstatement
+        preparedStmtBorrower.execute();
 
 
-    try {
-      System.out.println("Please, enter the requested information to add the loan to your investor wallet");
+        // Get data for loan table
 
-      // Get data for borrower table
-      System.out.println("Please, enter the borrower's Social Security Number");
-      ssn = Integer.parseInt(br.readLine());
-
-      System.out.println("Please, enter borrower's income");
-      borrowerIncome = Integer.parseInt(br.readLine());
-
-      System.out.println("Please, enter the the borrower's state int the two-letter format");
-      borrowerState = br.readLine();
-
-      System.out.println("Please, enter borrower's credit rating");
-      borrowerCreditScore = Float.parseFloat(br.readLine());
-
-      // the mysql insert statement
-      String queryBorrower = " insert into investor_borrower (member_id, annual_income, address, credit_score)"
-          + " values (?, ?, ?, ?)";
-
-      // create the mysql insert preparedstatement
-      PreparedStatement preparedStmtBorrower = conn.prepareStatement(queryBorrower);
-      preparedStmtBorrower.setInt(1, ssn);
-      preparedStmtBorrower.setInt(2, borrowerIncome);
-      preparedStmtBorrower.setString(3, borrowerState);
-      preparedStmtBorrower.setFloat(4, borrowerCreditScore);
-      // execute the preparedstatement
-      preparedStmtBorrower.execute();
+        int loanAmount;
+        double intRate;
+        String loanTerm;
+        int loanPurpose;
+        String loanIssueDate;
+        String loanStatus = "Current";
+        int loanGrade;
+        int home_id;
 
 
-      // Get data for loan table
+        System.out.println("Please, enter the loan amount");
+        loanAmount = Integer.parseInt(br.readLine());
 
-      int loanAmount;
-      double intRate;
-      String loanTerm;
-      int loanPurpose;
-      String loanIssueDate;
-      String loanStatus = "Current";
-      int loanGrade;
-      int home_id;
+        System.out.println("Please, enter the interest rate of the loan");
+        intRate = Integer.parseInt(br.readLine());
 
+        System.out.println("Please, enter the loa term");
+        loanTerm = br.readLine();
 
-      System.out.println("Please, enter the loan amount");
-      loanAmount = Integer.parseInt(br.readLine());
+        System.out.println("Please, enter the purpose of the loan");
+        loanPurpose = Integer.parseInt(br.readLine());
 
-      System.out.println("Please, enter the interest rate of the loan");
-      intRate = Integer.parseInt(br.readLine());
+        System.out.println("Please, enter the date the loan was issued in the following format, 15-Mar");
+        loanIssueDate = br.readLine();
 
-      System.out.println("Please, enter the loa term");
-      loanTerm = br.readLine();
+        System.out.println("Please, enter the grade of the loan");
+        loanGrade = Integer.parseInt(br.readLine());
 
-      System.out.println("Please, enter the purpose of the loan");
-      loanPurpose = Integer.parseInt(br.readLine());
-
-      System.out.println("Please, enter the date the loan was issued in the following format, 15-Mar");
-      loanIssueDate = br.readLine();
-
-      System.out.println("Please, enter the grade of the loan");
-      loanGrade = Integer.parseInt(br.readLine());
-
-      System.out.println("Please, enter the home ownership type of the borrower");
-      home_id = Integer.parseInt(br.readLine());
+        System.out.println("Please, enter the home ownership type of the borrower");
+        home_id = Integer.parseInt(br.readLine());
 
 
+        // the mysql insert statement
+        String queryLoan = " insert into investor_loan (investor_id, loan_amount, int_rate, term, purpose, issue_date, loan_status, "
+            + "member_id, grade, home_id)"
+            + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-      // the mysql insert statement
-      String queryLoan = " insert into investor_loan (loan_amount, int_rate, term, purpose, issue_date, loan_status, "
-          + "member_id, grade, home_id)"
-          + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // create the mysql insert preparedstatement
+        PreparedStatement preparedStmtLoan = conn.prepareStatement(queryLoan);
+        preparedStmtLoan.setString(1, clientUsername);
+        preparedStmtLoan.setInt(2, loanAmount);
+        preparedStmtLoan.setInt(3, loanAmount);
+        preparedStmtLoan.setDouble(4, intRate);
+        preparedStmtLoan.setString(5, loanTerm);
+        preparedStmtLoan.setInt(6, loanPurpose);
+        preparedStmtLoan.setString(7, loanIssueDate);
+        preparedStmtLoan.setString(8, loanStatus);
+        preparedStmtLoan.setInt(9, loanGrade);
+        preparedStmtLoan.setInt(10, home_id);
 
-      // create the mysql insert preparedstatement
-      PreparedStatement preparedStmtLoan = conn.prepareStatement(queryLoan);
-      preparedStmtLoan.setInt(1, loanAmount);
-      preparedStmtLoan.setInt(2, loanAmount);
-      preparedStmtLoan.setDouble(3, intRate);
-      preparedStmtLoan.setString(4, loanTerm);
-      preparedStmtLoan.setInt(5, loanPurpose);
-      preparedStmtLoan.setString(6, loanIssueDate);
-      preparedStmtLoan.setString(7, loanStatus);
-      preparedStmtLoan.setInt(8, loanGrade);
-      preparedStmtLoan.setInt(9, home_id);
-
-
-      // execute the preparedstatement
-      preparedStmtLoan.execute();
-
+        // execute the preparedstatement
+        preparedStmtLoan.execute();
+      } catch (NumberFormatException | SQLException e) {
+        e.printStackTrace();
+      }
     }
-    catch (NumberFormatException | SQLException e) {
-      e.printStackTrace();
+    else if(userChoice.equals("0")){
+      this.mainMenuProcessor(br, conn);
     }
 
 
