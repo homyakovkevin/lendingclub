@@ -117,17 +117,9 @@ public class JavaMySql {
         }
 
         try {
-
             InputStreamReader isr = new InputStreamReader(System.in);
             BufferedReader br = new BufferedReader(isr);
-            boolean loggedIn = false;
-
-            if (!loggedIn) {
-                requireLogIn(br, loggedIn, conn);
-            } else {
-                mainMenuProcessor(br, conn);
-            }
-
+            requireLogIn(br, conn);
         } catch (IOException e) {
             System.out.println("ERROR: Invalid Table");
             e.printStackTrace();
@@ -136,22 +128,22 @@ public class JavaMySql {
 
     }
 
-    private void requireLogIn(BufferedReader br, boolean loggedIn, Connection conn) throws IOException {
+    private void requireLogIn(BufferedReader br, Connection conn) throws IOException {
         System.out.println("Please, enter 1 to log in, or 2 to register an account");
         String command = br.readLine();
         try {
             switch (command) {
                 case ("1"):
                     if (this.promptLogin(conn, br)) {
-                        loggedIn = true;
+                        mainMenuProcessor(br, conn);
                     } else {
                         System.out.println("Entered credentials didn't match our records! ");
-                        requireLogIn(br, loggedIn, conn);
+                        requireLogIn(br, conn);
                     }
                     break;
                 case ("2"):
                     this.promptRegister(conn, br);
-                    loggedIn = true;
+                    mainMenuProcessor(br, conn);
                     break;
                 default:
                     System.out.println("Please, enter only 1 or 2!");
