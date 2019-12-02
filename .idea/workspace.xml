@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="589e3aa0-f39d-4dae-80b0-5da694d21b4f" name="Default Changelist" comment="Registration">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_8_0_18.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-connector-java-8.0.18.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HW9.iml" beforeDir="false" afterPath="$PROJECT_DIR$/HW9.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HW9/JavaMySql.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HW9/JavaMySql.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HW9/META-INF/HW9.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JavaMySql.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JavaMySql.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,12 +24,12 @@
     <option name="ONTO" value="refs/remotes/origin/kevin" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="kevin" />
+        <entry key="$PROJECT_DIR$" value="vladBranch" />
       </map>
     </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1URVOC4tGjBs5gxvBq2lpPYEG7Z" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -73,6 +66,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
@@ -116,7 +110,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
