@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="589e3aa0-f39d-4dae-80b0-5da694d21b4f" name="Default Changelist" comment="Registration">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="589e3aa0-f39d-4dae-80b0-5da694d21b4f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JavaMySql.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JavaMySql.java" afterDir="false" />
     </list>
@@ -101,6 +100,14 @@
       <workItem from="1574959093138" duration="1189000" />
       <workItem from="1574960356958" duration="2065000" />
     </task>
+    <task id="LOCAL-00001" summary="Main menu handler">
+      <created>1575324886872</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1575324886872</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,14 +128,15 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Registration" />
-    <option name="LAST_COMMIT_MESSAGE" value="Registration" />
+    <MESSAGE value="Main menu handler" />
+    <option name="LAST_COMMIT_MESSAGE" value="Main menu handler" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/JavaMySql.java</url>
-          <line>351</line>
+          <line>390</line>
           <properties class="JavaMySql" method="main">
             <option name="EMULATED" value="true" />
           </properties>

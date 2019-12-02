@@ -53,6 +53,8 @@ public class JavaMySql {
     private final String tableName = "JDBC_TEST";
     private final boolean useSSL = false;
 
+    private String clientUsername = "";
+
     public JavaMySql(String userName, String password) {
         this.userName = userName;
         this.password = password;
@@ -142,8 +144,12 @@ public class JavaMySql {
         try {
             switch (command) {
                 case ("1"):
-                    this.promptLogin(conn, br);
-                    loggedIn = true;
+                    if (this.promptLogin(conn, br)){
+                        loggedIn = true;
+                    } else {
+                        System.out.println("Entered credentials didn't match our records! ");
+                        requireLogIn(br, loggedIn, conn);
+                    }
                     break;
                 case ("2"):
                     this.promptRegister(conn, br);
@@ -176,7 +182,7 @@ public class JavaMySql {
             switch (command) {
                 case ("1"):
                     //TODO
-                    // defaultByHo (br, conn)
+                     defaultByHo(br, conn);
                 case ("2"):
                     //TODO
                     // defaultByCR (br, conn)
@@ -209,6 +215,36 @@ public class JavaMySql {
             e.printStackTrace();
         }
 
+    }
+
+    private void defaultByHo(BufferedReader br, Connection conn){
+        System.out.println("Please choose Home Ownership type: \n" +
+                "0 --> Default by Home Ownership type\n" +
+                "1 --> Default by borrower credit grade\n" +
+                "2 --> Average size of loan by borrower credit grade\n" +
+                "======================================================" +
+                "99 --> Return to Main menu");
+        try {
+            CallableStatement stmt = conn.prepareCall("{? = call default_by_homewonership(?)}");
+            String hoIndex = br.readLine();
+            int hoIndexInt = Integer.parseInt(hoIndex);
+            if (hoIndexInt == 99){
+                mainMenuProcessor(br, conn);
+            } else {
+                stmt.registerOutParameter(1, Types.FLOAT);
+                //Setting the input parameters of the function
+                stmt.setInt(2, hoIndexInt);
+            }
+
+
+        } catch (IOException io){
+            io.printStackTrace();
+        } catch (NumberFormatException nf){
+            System.out.println("Please enter number associated with desired option");
+            defaultByHo(br, conn);
+        } catch (SQLException se){
+            se.printStackTrace();
+        }
     }
 
 
@@ -288,6 +324,8 @@ public class JavaMySql {
             investor_passwords.add(rs_password.getString("passcode"));
         }
 
+        this.clientUsername = userName;
+
         return investor_passwords.contains(password) && investor_ids.contains(userName);
 
     }
@@ -334,6 +372,7 @@ public class JavaMySql {
                 preparedStmt.setInt(5, 0);
                 // execute the preparedstatement
                 preparedStmt.execute();
+                this.clientUsername = userName;
             } else {
                 System.out.println("Email is already used. Log in to an existing account, or use a different email");
                 this.promptRegister(conn, br);
