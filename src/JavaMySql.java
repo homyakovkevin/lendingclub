@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -333,6 +334,82 @@ public class JavaMySql {
             io.printStackTrace();
         }
     }
+
+  public void addLoanToAccount(Connection conn, BufferedReader br) throws IOException {
+
+    int ssn;
+    int borrowerIncome;
+    String borrowerState;
+    float borrowerCreditScore;
+
+
+    try {
+      System.out.println("Please, enter the requested information to add the loan to your investor wallet");
+
+      // Get data for borrower table
+      System.out.println("Please, enter the borrower's Social Security Number");
+      ssn = Integer.parseInt(br.readLine());
+
+      System.out.println("Please, enter borrower's income");
+      borrowerIncome = Integer.parseInt(br.readLine());
+
+      System.out.println("Please, enter the the borrower's state int the two-letter format");
+      borrowerState = br.readLine();
+
+      System.out.println("Please, enter borrower's credit rating");
+      borrowerCreditScore = Float.parseFloat(br.readLine());
+
+      // the mysql insert statement
+      String query = " insert into investor_borrower (member_id, annual_income, address, credit_score)"
+          + " values (?, ?, ?, ?)";
+
+      // create the mysql insert preparedstatement
+      PreparedStatement preparedStmt = conn.prepareStatement(query);
+      preparedStmt.setInt(1, ssn);
+      preparedStmt.setInt(2, borrowerIncome);
+      preparedStmt.setString(3, borrowerState);
+      preparedStmt.setFloat(4, borrowerCreditScore);
+      // execute the preparedstatement
+      preparedStmt.execute();
+
+
+      // Get data for loan table
+
+      int loanAmount;
+      double intRate;
+      String loanTerm;
+      int loanPurpose;
+      String loanIssueDate;
+      String loanStatus = "Current";
+
+
+      System.out.println("Please, enter you loan");
+
+
+
+
+      // the mysql insert statement
+      String query = " insert into investor_account (investor_id, passcode, first_name, last_name, inv_number)"
+          + " values (?, ?, ?, ?, ?)";
+
+      // create the mysql insert preparedstatement
+      PreparedStatement preparedStmt = conn.prepareStatement(query);
+      preparedStmt.setString(1, userName);
+      preparedStmt.setString(2, passCode);
+      preparedStmt.setString(3, firstName);
+      preparedStmt.setString(4, lastName);
+      preparedStmt.setInt(5, 0);
+      // execute the preparedstatement
+      preparedStmt.execute();
+
+    }
+    catch (ParseException | SQLException e) {
+      e.printStackTrace();
+    }
+
+
+
+  }
 
 
     /**
