@@ -25,12 +25,12 @@ public class JavaMySql {
     /**
      * The name of the MySQL account to use (or empty for anonymous)
      */
-    private  String userName = "root";
+    private String userName = "root";
 
     /**
      * The password for the MySQL account (or empty for anonymous)
      */
-    private  String password = "Vk13790000!";
+    private String password = "Vk13790000!";
 
     /**
      * The name of the computer running MySQL
@@ -71,8 +71,8 @@ public class JavaMySql {
         connectionProps.put("password", this.password);
 
         conn = DriverManager.getConnection("jdbc:mysql://"
-              + this.serverName + ":" + this.portNumber + "/" + this.dbName + "?characterEncoding=UTF-8&useSSL=false",
-          connectionProps);
+                        + this.serverName + ":" + this.portNumber + "/" + this.dbName + "?characterEncoding=UTF-8&useSSL=false",
+                connectionProps);
 
         return conn;
     }
@@ -99,12 +99,11 @@ public class JavaMySql {
     }
 
 
-
     /**
      * Connect to MySQL and do some stuff.
      */
-    public void run()  {
-         // Connect to MySQL
+    public void run() {
+        // Connect to MySQL
         Connection conn = null;
         try {
             conn = this.getConnection();
@@ -117,32 +116,100 @@ public class JavaMySql {
 
         try {
 
-        InputStreamReader isr = new InputStreamReader(System.in);
-        BufferedReader br = new BufferedReader(isr);
-        String command = br.readLine();
+            InputStreamReader isr = new InputStreamReader(System.in);
+            BufferedReader br = new BufferedReader(isr);
+            String command = br.readLine();
+            boolean loggedIn = false;
 
+            while (!command.equals("end")) {
+                if (!loggedIn) {
+                    requireLogIn(br, loggedIn, conn);
+                } else {
+                    mainMenuProcessor(br, conn);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("ERROR: Invalid Table");
+            e.printStackTrace();
+            return;
+        }
+
+    }
+
+    private void requireLogIn(BufferedReader br, boolean loggedIn, Connection conn) throws IOException {
         System.out.println("Please, enter 1 to log in, or 2 to register an account");
-        while (!command.equals("end")) {
-          switch (command) {
-            case ("1"):
-              this.promptLogin(conn, br);
-              break;
-            case ("2"):
-              this.promptRegister(conn, br);
-              break;
-            default:
-              System.out.println("Please, enter only 1 or 2!");
-              break;
-          }
+        String command = br.readLine();
+        try {
+            switch (command) {
+                case ("1"):
+                    this.promptLogin(conn, br);
+                    loggedIn = true;
+                    break;
+                case ("2"):
+                    this.promptRegister(conn, br);
+                    loggedIn = true;
+                    break;
+                default:
+                    System.out.println("Please, enter only 1 or 2!");
+                    break;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void mainMenuProcessor(BufferedReader br, Connection conn) throws IOException {
+        String menu =
+                        "==================== Historical data summary ========================== " +
+                        "1 --> Default by Home Ownership type\n" +
+                        "2 --> Default by borrower credit grade\n" +
+                        "3 --> Average size of loan by borrower credit grade\n" +
+                        "4 --> Average interest rate by borrower credit grade\n" +
+                        "==================== Portfolio management ========================== " +
+                        "5 --> Show portfolio" +
+                        "6 --> Update record in portfolio" +
+                        "7 --> Delete record in portfolio" +
+                        "8 --> Show average monthly profit";
+        System.out.println(menu);
+        String command = br.readLine();
+        try {
+            switch (command) {
+                case ("1"):
+                    //TODO
+                    // defaultByHo (br, conn)
+                case ("2"):
+                    //TODO
+                    // defaultByCR (br, conn)
+                case ("3"):
+                    //TODO
+                    // averageSizeByCg (br, conn)
+                case ("4"):
+                    //TODO
+                    // averageInterestByCg (br, conn)
+                case ("5"):
+                    //TODO
+                    // showPortfolio (br, conn)
+                case ("6"):
+                    //TODO
+                    // updateRecord (br, conn)
+                case ("7"):
+                    //TODO
+                    // homeOwenershipAverage (br, conn)
+                case ("8"):
+                    //TODO
+                    // homeOwenershipAverage (br, conn)
+                case ("9"):
+                    //TODO
+                    // homeOwenershipAverage (br, conn)
+                default:
+                    System.out.println("Please, enter only numbers from 1 to 8!");
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        } catch (IOException | SQLException e) {
-          System.out.println("ERROR: Invalid Table");
-          e.printStackTrace();
-          return;
-        }
-
-        }
+    }
 
 
 //        // Connect to MySQL
@@ -200,34 +267,33 @@ public class JavaMySql {
 //        }
 
 
+    public boolean promptLogin(Connection conn, BufferedReader br) throws IOException, SQLException {
+        System.out.println("Type in your login for Lending Club");
+        String userName = br.readLine();
+        System.out.println("Type in your password for Lending Club");
+        String password = br.readLine();
 
-  public boolean promptLogin(Connection conn, BufferedReader br) throws IOException, SQLException {
-    System.out.println("Type in your login for Lending Club");
-    String userName = br.readLine();
-    System.out.println("Type in your password for Lending Club");
-    String password = br.readLine();
+        Statement stmt = conn.createStatement();
+        ResultSet rs_investor_id = stmt.executeQuery("select investor_id from investor_account");
+        List<String> investor_ids = new ArrayList<>();
 
-    Statement stmt = conn.createStatement();
-    ResultSet rs_investor_id = stmt.executeQuery("select investor_id from investor_account");
-    List<String> investor_ids = new ArrayList<>();
+        while (rs_investor_id.next()) {
+            investor_ids.add(rs_investor_id.getString("investor_id"));
+        }
 
-    while (rs_investor_id.next()) {
-      investor_ids.add(rs_investor_id.getString("investor_id"));
+        ResultSet rs_password = stmt.executeQuery("select passcode from investor_account");
+        List<String> investor_passwords = new ArrayList<>();
+
+        while (rs_password.next()) {
+            investor_passwords.add(rs_password.getString("passcode"));
+        }
+
+        return investor_passwords.contains(password) && investor_ids.contains(userName);
+
     }
 
-    ResultSet rs_password = stmt.executeQuery("select passcode from investor_account");
-    List<String> investor_passwords = new ArrayList<>();
 
-    while (rs_password.next()) {
-      investor_passwords.add(rs_password.getString("passcode"));
-    }
-
-    return investor_passwords.contains(password) && investor_ids.contains(userName);
-
-  }
-
-
-    public void promptRegister(Connection conn, BufferedReader br)  {
+    public void promptRegister(Connection conn, BufferedReader br) {
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("select investor_id from investor_account");
@@ -235,7 +301,7 @@ public class JavaMySql {
 
             while (rs.next()) {
                 investorIdList.add(rs.getString("investor_id"));
-           }
+            }
 
             String userName;
             String passCode;
@@ -245,42 +311,40 @@ public class JavaMySql {
             System.out.println("Please, enter  username (email)");
             userName = br.readLine();
             if (!investorIdList.contains(userName)) {
-              System.out.println("Please, enter  password");
-              passCode = br.readLine();
+                System.out.println("Please, enter  password");
+                passCode = br.readLine();
 
-              System.out.println("Please, enter  First Name");
-              firstName = br.readLine();
+                System.out.println("Please, enter  First Name");
+                firstName = br.readLine();
 
-              System.out.println("Please, enter  Last Name");
-              lastName = br.readLine();
+                System.out.println("Please, enter  Last Name");
+                lastName = br.readLine();
 
 
-              // the mysql insert statement
-              String query = " insert into investor_account (investor_id, passcode, first_name, last_name, inv_number)"
-                  + " values (?, ?, ?, ?, ?)";
+                // the mysql insert statement
+                String query = " insert into investor_account (investor_id, passcode, first_name, last_name, inv_number)"
+                        + " values (?, ?, ?, ?, ?)";
 
-              // create the mysql insert preparedstatement
-              PreparedStatement preparedStmt = conn.prepareStatement(query);
-              preparedStmt.setString (1, userName);
-              preparedStmt.setString (2, passCode);
-              preparedStmt.setString (3, firstName);
-              preparedStmt.setString (4, lastName);
-              preparedStmt.setInt (5, 0);
-              // execute the preparedstatement
-              preparedStmt.execute();
-            }
-            else {
+                // create the mysql insert preparedstatement
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setString(1, userName);
+                preparedStmt.setString(2, passCode);
+                preparedStmt.setString(3, firstName);
+                preparedStmt.setString(4, lastName);
+                preparedStmt.setInt(5, 0);
+                // execute the preparedstatement
+                preparedStmt.execute();
+            } else {
                 System.out.println("Email is already used. Log in to an existing account, or use a different email");
                 this.promptRegister(conn, br);
             }
-        }
-        catch (IOException | SQLException io) {
+        } catch (IOException | SQLException io) {
             io.printStackTrace();
         }
     }
 
 
-        /**
+    /**
      * Connect to the DB and do some stuff
      *
      * @param args
@@ -294,4 +358,3 @@ public class JavaMySql {
         app.run();
     }
 }
-        
