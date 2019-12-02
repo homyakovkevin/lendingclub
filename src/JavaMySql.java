@@ -120,16 +120,14 @@ public class JavaMySql {
 
             InputStreamReader isr = new InputStreamReader(System.in);
             BufferedReader br = new BufferedReader(isr);
-            String command = br.readLine();
             boolean loggedIn = false;
 
-            while (!command.equals("end")) {
-                if (!loggedIn) {
-                    requireLogIn(br, loggedIn, conn);
-                } else {
-                    mainMenuProcessor(br, conn);
-                }
+            if (!loggedIn) {
+                requireLogIn(br, loggedIn, conn);
+            } else {
+                mainMenuProcessor(br, conn);
             }
+
         } catch (IOException e) {
             System.out.println("ERROR: Invalid Table");
             e.printStackTrace();
@@ -144,7 +142,7 @@ public class JavaMySql {
         try {
             switch (command) {
                 case ("1"):
-                    if (this.promptLogin(conn, br)){
+                    if (this.promptLogin(conn, br)) {
                         loggedIn = true;
                     } else {
                         System.out.println("Entered credentials didn't match our records! ");
@@ -166,23 +164,24 @@ public class JavaMySql {
 
     private void mainMenuProcessor(BufferedReader br, Connection conn) throws IOException {
         String menu =
-                        "==================== Historical data summary ========================== " +
+                "==================== Historical data summary ========================== " +
                         "1 --> Default by Home Ownership type\n" +
                         "2 --> Default by borrower credit grade\n" +
                         "3 --> Average size of loan by borrower credit grade\n" +
                         "4 --> Average interest rate by borrower credit grade\n" +
                         "==================== Portfolio management ========================== " +
-                        "5 --> Show portfolio" +
-                        "6 --> Update record in portfolio" +
-                        "7 --> Delete record in portfolio" +
-                        "8 --> Show average monthly profit";
+                        "5 --> Show portfolio\n" +
+                        "6 --> Update record in portfolio\n" +
+                        "7 --> Delete record in portfolio\n" +
+                        "8 --> Show average monthly profit\n" +
+                "Type \"END\" to close the program\n";
         System.out.println(menu);
         String command = br.readLine();
         try {
             switch (command) {
                 case ("1"):
                     //TODO
-                     defaultByHo(br, conn);
+                    defaultByHo(br, conn);
                 case ("2"):
                     //TODO
                     // defaultByCR (br, conn)
@@ -207,6 +206,10 @@ public class JavaMySql {
                 case ("9"):
                     //TODO
                     // homeOwenershipAverage (br, conn)
+                case ("END"):
+                    //TODO
+                    br.close();
+                    break;
                 default:
                     System.out.println("Please, enter only numbers from 1 to 8!");
                     break;
@@ -217,7 +220,7 @@ public class JavaMySql {
 
     }
 
-    private void defaultByHo(BufferedReader br, Connection conn){
+    private void defaultByHo(BufferedReader br, Connection conn) {
         System.out.println("Please choose Home Ownership type: \n" +
                 "0 --> Default by Home Ownership type\n" +
                 "1 --> Default by borrower credit grade\n" +
@@ -228,79 +231,24 @@ public class JavaMySql {
             CallableStatement stmt = conn.prepareCall("{? = call default_by_homewonership(?)}");
             String hoIndex = br.readLine();
             int hoIndexInt = Integer.parseInt(hoIndex);
-            if (hoIndexInt == 99){
+            if (hoIndexInt == 99) {
                 mainMenuProcessor(br, conn);
             } else {
                 stmt.registerOutParameter(1, Types.FLOAT);
-                //Setting the input parameters of the function
                 stmt.setInt(2, hoIndexInt);
+                stmt.execute();
             }
 
 
-        } catch (IOException io){
+        } catch (IOException io) {
             io.printStackTrace();
-        } catch (NumberFormatException nf){
+        } catch (NumberFormatException nf) {
             System.out.println("Please enter number associated with desired option");
             defaultByHo(br, conn);
-        } catch (SQLException se){
+        } catch (SQLException se) {
             se.printStackTrace();
         }
     }
-
-
-//        // Connect to MySQL
-//        Connection conn = null;
-//        try {
-//            conn = this.getConnection();
-//            System.out.println("Connected to database");
-//        } catch (SQLException e) {
-//            System.out.println("ERROR: Could not connect to the database");
-//            e.printStackTrace();
-//            return;
-//        }
-//
-//        try {
-//            Statement stmt = conn.createStatement();
-//            ResultSet rs = stmt.executeQuery("select character_name from lotr_character");
-//            List<String> character_names = new ArrayList<>();
-//
-//            System.out.println("Choose your character from the list below");
-//
-//            while (rs.next()) {
-//                System.out.println(rs.getString("character_name"));
-//                character_names.add(rs.getString("character_name"));
-//            }
-//
-//            String charName = "";
-//
-//            while (!character_names.contains(charName)) {
-//                InputStreamReader isr = new InputStreamReader(System.in);
-//                BufferedReader br = new BufferedReader(isr);
-//                charName = br.readLine();
-//                if (!character_names.contains(charName)) {
-//                    System.out.println("Choose your character again, it does not match the one in the list");
-//                }
-//            }
-//
-//            String query = "{CALL track_character(?)}";
-//            CallableStatement s = conn.prepareCall(query);
-//            s.setString(1, charName);
-//            ResultSet r = s.executeQuery();
-//
-//            while (r.next()) {
-//                System.out.println(String.format("%s / %s / %s",
-//                        r.getString("name_encountered"),
-//                        r.getString("region_name"),
-//                        r.getString("b.title")));
-//            }
-//            conn.close();
-//
-//
-//        } catch (SQLException | IOException e) {
-//            System.out.println("ERROR: Invalid Table");
-//            e.printStackTrace();
-//            return;
-//        }
 
 
     public boolean promptLogin(Connection conn, BufferedReader br) throws IOException, SQLException {

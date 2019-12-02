@@ -107,7 +107,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575324886872</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Created deafaultByHo, field &quot;clientUsername&quot; created">
+      <created>1575328118083</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1575328118083</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -129,14 +136,15 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Registration" />
     <MESSAGE value="Main menu handler" />
-    <option name="LAST_COMMIT_MESSAGE" value="Main menu handler" />
+    <MESSAGE value="Created deafaultByHo, field &quot;clientUsername&quot; created" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created deafaultByHo, field &quot;clientUsername&quot; created" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/JavaMySql.java</url>
-          <line>390</line>
+          <line>338</line>
           <properties class="JavaMySql" method="main">
             <option name="EMULATED" value="true" />
           </properties>
