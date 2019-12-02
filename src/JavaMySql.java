@@ -129,7 +129,7 @@ public class JavaMySql {
     }
 
     private void requireLogIn(BufferedReader br, Connection conn) throws IOException {
-        System.out.println("Please, enter 1 to log in, or 2 to register an account");
+        System.out.println("Please, enter 1 to log in, or 2 to register an account \n");
         String command = br.readLine();
         try {
             switch (command) {
@@ -137,7 +137,7 @@ public class JavaMySql {
                     if (this.promptLogin(conn, br)) {
                         mainMenuProcessor(br, conn);
                     } else {
-                        System.out.println("Entered credentials didn't match our records! ");
+                        System.out.println("Entered credentials didn't match our records! \n");
                         requireLogIn(br, conn);
                     }
                     break;
@@ -146,7 +146,7 @@ public class JavaMySql {
                     mainMenuProcessor(br, conn);
                     break;
                 default:
-                    System.out.println("Please, enter only 1 or 2!");
+                    System.out.println("Please, enter only 1 or 2! \n");
                     break;
             }
         } catch (SQLException e) {
@@ -156,12 +156,12 @@ public class JavaMySql {
 
     private void mainMenuProcessor(BufferedReader br, Connection conn) throws IOException {
         String menu =
-                "==================== Historical data summary ========================== " +
+                "==================== Historical data summary ========================== \n" +
                         "1 --> Default by Home Ownership type\n" +
                         "2 --> Default by borrower credit grade\n" +
                         "3 --> Average size of loan by borrower credit grade\n" +
                         "4 --> Average interest rate by borrower credit grade\n" +
-                        "==================== Portfolio management ========================== " +
+                        "==================== Portfolio management ========================== \n" +
                         "5 --> Show portfolio\n" +
                         "6 --> Update record in portfolio\n" +
                         "7 --> Delete record in portfolio\n" +
@@ -203,7 +203,8 @@ public class JavaMySql {
                     br.close();
                     break;
                 default:
-                    System.out.println("Please, enter only numbers from 1 to 8!");
+                    System.out.println("Please, enter only numbers from 1 to 8!\n");
+                    mainMenuProcessor(br,conn);
                     break;
             }
         } catch (Exception e) {
@@ -214,13 +215,13 @@ public class JavaMySql {
 
     private void defaultByHo(BufferedReader br, Connection conn) {
         System.out.println("Please choose Home Ownership type: \n" +
-                "0 --> Default by Home Ownership type\n" +
-                "1 --> Default by borrower credit grade\n" +
-                "2 --> Average size of loan by borrower credit grade\n" +
-                "======================================================" +
-                "99 --> Return to Main menu");
+                "0 --> Owns\n" +
+                "1 --> Rent\n" +
+                "2 --> Mortgage\n" +
+                "====================================================== \n" +
+                "99 --> Return to Main menu\n");
         try {
-            CallableStatement stmt = conn.prepareCall("{? = call default_by_homewonership(?)}");
+            CallableStatement stmt = conn.prepareCall("{? = call default_by_homeownership(?)}");
             String hoIndex = br.readLine();
             int hoIndexInt = Integer.parseInt(hoIndex);
             if (hoIndexInt == 99) {
@@ -235,7 +236,7 @@ public class JavaMySql {
         } catch (IOException io) {
             io.printStackTrace();
         } catch (NumberFormatException nf) {
-            System.out.println("Please enter number associated with desired option");
+            System.out.println("Please enter number associated with desired option\n");
             defaultByHo(br, conn);
         } catch (SQLException se) {
             se.printStackTrace();
