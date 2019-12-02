@@ -230,9 +230,20 @@ public class JavaMySql {
                 stmt.registerOutParameter(1, Types.FLOAT);
                 stmt.setInt(2, hoIndexInt);
                 stmt.execute();
+                System.out.println("Average default rate: " + stmt.getInt(1));
+                System.out.println("============================================"+
+                        "1 --> Retry \n" +
+                "0 --> Back to Main Menu \n");
+                String option = br.readLine();
+                if (option.equals("1")){
+                    defaultByHo(br, conn);
+                } else if (option.equals("0")){
+                    mainMenuProcessor(br, conn);
+                } else {
+                    System.out.println("Wrong option selected, redirecting to Main Menu... \n");
+                    mainMenuProcessor(br, conn);
+                }
             }
-
-
         } catch (IOException io) {
             io.printStackTrace();
         } catch (NumberFormatException nf) {

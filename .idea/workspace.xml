@@ -128,7 +128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575329576991</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Bugs corrected">
+      <created>1575330098232</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1575330098232</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -152,14 +159,15 @@
     <MESSAGE value="Main menu handler" />
     <MESSAGE value="Created deafaultByHo, field &quot;clientUsername&quot; created" />
     <MESSAGE value="Refactored run()" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored run()" />
+    <MESSAGE value="Bugs corrected" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugs corrected" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/JavaMySql.java</url>
-          <line>331</line>
+          <line>342</line>
           <properties class="JavaMySql" method="main">
             <option name="EMULATED" value="true" />
           </properties>
