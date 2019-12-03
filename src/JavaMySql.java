@@ -177,7 +177,7 @@ public class JavaMySql {
                     defaultByHo(br, conn);
                 case ("2"):
                     //TODO
-                    addLoanToAccount(conn, br);
+
                 case ("3"):
                     //TODO
                     // averageSizeByCg (br, conn)
@@ -189,13 +189,13 @@ public class JavaMySql {
                     // showPortfolio (br, conn)
                 case ("6"):
                     //TODO
-                    // updateRecord (br, conn)
+                  addLoanToAccount(conn, br);
                 case ("7"):
                     //TODO
                     // homeOwenershipAverage (br, conn)
                 case ("8"):
                     //TODO
-                    // homeOwenershipAverage (br, conn)
+                  getMonthlyProfit(conn);
                 case ("9"):
                     //TODO
                     // homeOwenershipAverage (br, conn)
@@ -231,7 +231,7 @@ public class JavaMySql {
                 stmt.registerOutParameter(1, Types.FLOAT);
                 stmt.setInt(2, hoIndexInt);
                 stmt.execute();
-                System.out.println("Average default rate: " + stmt.getInt(1));
+                System.out.println("Average default rate: " + stmt.getFloat(1));
                 System.out.println("============================================"+
                         "1 --> Retry \n" +
                 "0 --> Back to Main Menu \n");
@@ -440,8 +440,19 @@ public class JavaMySql {
       this.mainMenuProcessor(br, conn);
     }
 
+  }
 
+  public void getMonthlyProfit(Connection conn) {
+     try {
+       CallableStatement stmt = conn.prepareCall("{? = call monthly_profit(?)}");
 
+       stmt.registerOutParameter(1, Types.FLOAT);
+       stmt.setString(2, clientUsername);
+       stmt.execute();
+       System.out.println("Monthly income: " + stmt.getFloat(1));
+     } catch (SQLException se) {
+       se.printStackTrace();
+     }
   }
 
 

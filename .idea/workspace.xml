@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="589e3aa0-f39d-4dae-80b0-5da694d21b4f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/SQL_resources/LendingClubDB.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL_resources/LCfuntion.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL_resources/LendingCLubDatabaseUpdated.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL_resources/LendingCLubDatabaseUpdatedPassCodeok.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL_resources/LendingClubDatabase.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/HW9/JavaMySql.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HW9/JavaMySql.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JavaMySql.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JavaMySql.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -161,19 +167,5 @@
     <MESSAGE value="Refactored run()" />
     <MESSAGE value="Bugs corrected" />
     <option name="LAST_COMMIT_MESSAGE" value="Bugs corrected" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/JavaMySql.java</url>
-          <line>342</line>
-          <properties class="JavaMySql" method="main">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
