@@ -115,7 +115,6 @@ public class JavaMySql {
             e.printStackTrace();
             return;
         }
-
         try {
             InputStreamReader isr = new InputStreamReader(System.in);
             BufferedReader br = new BufferedReader(isr);
@@ -129,7 +128,9 @@ public class JavaMySql {
     }
 
     private void requireLogIn(BufferedReader br, Connection conn) throws IOException {
-        System.out.println("Please, enter 1 to log in, or 2 to register an account \n");
+        System.out.println("Please choose one option: \n" +
+                        "1 --> Log in \n" +
+                        "2 --> Register \n");
         String command = br.readLine();
         try {
             switch (command) {
@@ -158,31 +159,33 @@ public class JavaMySql {
         String menu =
                 "==================== Historical data summary ========================== \n" +
                         "1 --> Default by Home Ownership type\n" +
-                        "2 --> Default by borrower credit grade\n" +
-                        "3 --> Average size of loan by borrower credit grade\n" +
-                        "4 --> Average interest rate by borrower credit grade\n" +
+                        "2 --> Default by borrower's credit grade\n" +
+                        "3 --> Average size of loan by borrower's credit grade\n" +
+                        "4 --> Average interest rate by borrower's credit grade\n" +
                         "==================== Portfolio management ========================== \n" +
                         "5 --> Show portfolio\n" +
                         "6 --> Update record in portfolio\n" +
-                        "7 --> Delete record in portfolio\n" +
-                        "8 --> Show average monthly profit\n" +
-                "Type \"END\" to close the program\n";
+                        "7 --> Update record in portfolio\n" +
+                        "8 --> Delete record in portfolio\n" +
+                        "9 --> Show average monthly profit\n" +
+                "Type \"END\" to close the program\n" +
+                "=======================================================================";
         System.out.println(menu);
         String command = br.readLine();
         try {
-            switch (command) {
+            switch (command.toLowerCase()) {
                 case ("1"):
-                    //TODO
                     defaultByHo(br, conn);
+                    break;
                 case ("2"):
-                    //TODO
-                    // defaultByCR (br, conn)
+                    defaultByCr (br, conn);
+                    break;
                 case ("3"):
-                    //TODO
-                    // averageSizeByCg (br, conn)
+                    averageSizeByCg (br, conn);
+                    break;
                 case ("4"):
-                    //TODO
-                    // averageInterestByCg (br, conn)
+                    averageInterestByCg (br, conn);
+                    break;
                 case ("5"):
                     //TODO
                     // showPortfolio (br, conn)
@@ -198,12 +201,12 @@ public class JavaMySql {
                 case ("9"):
                     //TODO
                     // homeOwenershipAverage (br, conn)
-                case ("END"):
+                case ("end"):
                     //TODO
                     br.close();
                     break;
                 default:
-                    System.out.println("Please, enter only numbers from 1 to 8!\n");
+                    System.out.println("Please, enter only numbers from 1 to 9!\n");
                     mainMenuProcessor(br,conn);
                     break;
             }
@@ -211,6 +214,96 @@ public class JavaMySql {
             e.printStackTrace();
         }
 
+    }
+
+    private void averageInterestByCg (BufferedReader br, Connection conn){
+        System.out.println("Please choose credit grade: \n" +
+                "0 --> G\n" +
+                "1 --> C\n" +
+                "2 --> A\n" +
+                "3 --> B\n" +
+                "4 --> E\n" +
+                "5 --> D\n" +
+                "6 --> F\n" +
+                "====================================================== \n" +
+                "99 --> Return to Main menu\n");
+        try {
+            CallableStatement stmt = conn.prepareCall("{? = call average_int_rate_by_grade(?)}");
+            String creditGrade = br.readLine();
+            int creditGradeInt = Integer.parseInt(creditGrade);
+            if (creditGradeInt == 99) {
+                mainMenuProcessor(br, conn);
+            } else {
+                stmt.registerOutParameter(1, Types.DOUBLE);
+                stmt.setInt(2, creditGradeInt);
+                stmt.execute();
+                System.out.println("Average interest rate: " + (stmt.getDouble(1)) + "%");
+                System.out.println("============================================"+
+                        "1 --> Retry \n" +
+                        "0 --> Back to Main Menu \n");
+                String option = br.readLine();
+                if (option.equals("1")){
+                    defaultByHo(br, conn);
+                } else if (option.equals("0")){
+                    mainMenuProcessor(br, conn);
+                } else {
+                    System.out.println("Wrong option selected, redirecting to Main Menu... \n");
+                    mainMenuProcessor(br, conn);
+                }
+            }
+        } catch (IOException io) {
+            io.printStackTrace();
+        } catch (NumberFormatException nf) {
+            System.out.println("Please enter number associated with desired option\n");
+            defaultByHo(br, conn);
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    }
+
+    private void averageSizeByCg (BufferedReader br, Connection conn){
+        System.out.println("Please choose credit grade: \n" +
+                "0 --> G\n" +
+                "1 --> C\n" +
+                "2 --> A\n" +
+                "3 --> B\n" +
+                "4 --> E\n" +
+                "5 --> D\n" +
+                "6 --> F\n" +
+                "====================================================== \n" +
+                "99 --> Return to Main menu\n");
+        try {
+            CallableStatement stmt = conn.prepareCall("{? = call average_loan_size_by_grade(?)}");
+            String creditGrade = br.readLine();
+            int creditGradeInt = Integer.parseInt(creditGrade);
+            if (creditGradeInt == 99) {
+                mainMenuProcessor(br, conn);
+            } else {
+                stmt.registerOutParameter(1, Types.INTEGER);
+                stmt.setInt(2, creditGradeInt);
+                stmt.execute();
+                System.out.println("Average size of the loan: $" + (stmt.getInt(1)));
+                System.out.println("============================================"+
+                        "1 --> Retry \n" +
+                        "0 --> Back to Main Menu \n");
+                String option = br.readLine();
+                if (option.equals("1")){
+                    defaultByHo(br, conn);
+                } else if (option.equals("0")){
+                    mainMenuProcessor(br, conn);
+                } else {
+                    System.out.println("Wrong option selected, redirecting to Main Menu... \n");
+                    mainMenuProcessor(br, conn);
+                }
+            }
+        } catch (IOException io) {
+            io.printStackTrace();
+        } catch (NumberFormatException nf) {
+            System.out.println("Please enter number associated with desired option\n");
+            defaultByHo(br, conn);
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
     }
 
     private void defaultByHo(BufferedReader br, Connection conn) {
@@ -230,10 +323,55 @@ public class JavaMySql {
                 stmt.registerOutParameter(1, Types.FLOAT);
                 stmt.setInt(2, hoIndexInt);
                 stmt.execute();
-                System.out.println("Average default rate: " + stmt.getInt(1));
+                System.out.println("Average default rate: " + (stmt.getFloat(1) * 100) + "%");
                 System.out.println("============================================"+
                         "1 --> Retry \n" +
                 "0 --> Back to Main Menu \n");
+                String option = br.readLine();
+                if (option.equals("1")){
+                    defaultByHo(br, conn);
+                } else if (option.equals("0")){
+                    mainMenuProcessor(br, conn);
+                } else {
+                    System.out.println("Wrong option selected, redirecting to Main Menu... \n");
+                    mainMenuProcessor(br, conn);
+                }
+            }
+        } catch (IOException io) {
+            io.printStackTrace();
+        } catch (NumberFormatException nf) {
+            System.out.println("Please enter number associated with desired option\n");
+            defaultByHo(br, conn);
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    }
+
+    private void defaultByCr(BufferedReader br, Connection conn) {
+        System.out.println("Please choose credit grade: \n" +
+                "0 --> G\n" +
+                "1 --> C\n" +
+                "2 --> A\n" +
+                "3 --> B\n" +
+                "4 --> E\n" +
+                "5 --> D\n" +
+                "6 --> F\n" +
+                "====================================================== \n" +
+                "99 --> Return to Main menu\n");
+        try {
+            CallableStatement stmt = conn.prepareCall("{? = call default_by_grade(?)}");
+            String creditGrade = br.readLine();
+            int creditGradeInt = Integer.parseInt(creditGrade);
+            if (creditGradeInt == 99) {
+                mainMenuProcessor(br, conn);
+            } else {
+                stmt.registerOutParameter(1, Types.FLOAT);
+                stmt.setInt(2, creditGradeInt);
+                stmt.execute();
+                System.out.println("Average default rate: " + (stmt.getFloat(1) * 100) + "%");
+                System.out.println("============================================"+
+                        "1 --> Retry \n" +
+                        "0 --> Back to Main Menu \n");
                 String option = br.readLine();
                 if (option.equals("1")){
                     defaultByHo(br, conn);
