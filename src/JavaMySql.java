@@ -213,7 +213,6 @@ public class JavaMySql {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void averageInterestByCg (BufferedReader br, Connection conn){
@@ -258,6 +257,78 @@ public class JavaMySql {
             defaultByHo(br, conn);
         } catch (SQLException se) {
             se.printStackTrace();
+        }
+    }
+
+    private void showRecords (BufferedReader br, Connection conn, boolean readOnly){
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from investor_loan");
+            System.out.println("===================== YOUR PORTFOLIO ===========================");
+            System.out.println("loan_id"+"\t"+"investor_id" +"\t"+"loan_amount"+"\t"+"int_rate"
+                    +"\t"+"term"+"\t"+"purpose" +"\t"+"issue_date"+"\t"+"loan_status"
+                    +"\t"+"member_id"+"\t"+"grade" +"\t"+"home_id");
+            while (rs.next()){
+                System.out.println(rs.getString("loan_id")+"\t"+rs.getString("investor_id")
+                        +"\t"+rs.getString("loan_amount")+"\t"+rs.getString("int_rate")
+                        +"\t"+rs.getString("term")+"\t"+rs.getString("purpose")
+                        +"\t"+rs.getString("issue_date")+"\t"+rs.getString("loan_status")
+                        +"\t"+rs.getString("member_id")+"\t"+rs.getString("grade")
+                        +"\t"+rs.getString("home_id"));
+            }
+            System.out.println("==========================================================");
+            System.out.println("0 --> Return to main menu");
+            if (!readOnly) {
+                String s = br.readLine();
+                if (s.equals("0")) mainMenuProcessor(br, conn);
+                else  {
+                    System.out.println("Wrong option selected, redirecting to Main Menu...");
+                    mainMenuProcessor(br, conn);
+                }
+            }
+        } catch (SQLException | IOException se){
+            se.printStackTrace();
+        }
+    }
+
+    private void deleteRecord(BufferedReader br, Connection conn){
+        showRecords(br, conn, true);
+        System.out.println("Provide loan_id of record you want to delete");
+        try {
+            String s = br.readLine();
+            int id = Integer.parseInt(s);
+            String sql = "delete from investor_loan where loan_id=?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+            System.out.println("Record deleted successfully");
+            System.out.println("0 --> Return to main menu");
+            System.out.println("1 --> Delete one more record");
+            String s2 = br.readLine();
+            if (s2.equals("0")) mainMenuProcessor(br, conn);
+            else if (s2.equals("1")) deleteRecord(br, conn);
+            else   {
+                System.out.println("Wrong option selected, redirecting to Main Menu...");
+                mainMenuProcessor(br, conn);
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showMonthlyProfit(BufferedReader br, Connection conn) {
+        try {
+            CallableStatement stmt = conn.prepareCall("{? = call monthly_profit(?)}");
+            stmt.registerOutParameter(1, Types.FLOAT);
+            stmt.setString(2, this.clientUsername);
+            stmt.execute();
+            System.out.println("============================================");
+            System.out.println("Monthly Profit: $" + (stmt.getFloat(1)));
+            System.out.println("============================================");
+            System.out.println("Returning to main menu");
+            mainMenuProcessor(br, conn);
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
         }
     }
 
